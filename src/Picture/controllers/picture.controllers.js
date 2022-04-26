@@ -8,7 +8,6 @@ const createPicture = (req, res) => {
       error: "Bad request",
     });
   }
-
   const picture = new Picture({
     url: req.body.url,
     username: req.body.description,
