@@ -1,5 +1,6 @@
 module.exports = routes => {
     const user= require("../User/controllers/user.controllers")
+    const album = require("../Album/controllers/album.controller")
     const picture = require("../Picture/controllers/picture.controllers")
     var router = require("express").Router();
     // USER
@@ -16,13 +17,28 @@ module.exports = routes => {
     // Login user
     router.post("/login", user.loginUser);
 
+    //Album
+    //Post album
+    router.post('/album',album.createAlbum)
 
+    //Get albumes
+    router.get('/album',album.getAlbum)
+
+    //Delete Album
+    router.delete('/album',album.deleteAlbum)
     
-    // // Picture
-    // // Create a new picture
-    // router.post("/picture", user.createPicture);
-    // // Retrieve all pictures
-    // router.get("/picture", user.getAllPictures);
+    //Picture
+    //Create a new picture
+    router.post("/picture", picture.createPicture);
+   
+    //Retrieve all pictures
+    router.get("/picture", picture.getPicturesWithoutAlbum);
+    
+    //Add image to album
+    router.post("/addImageToAlbum",picture.addImageToAlbum);
+    
+    //Delete Picture
+    router.delete("picture",picture.deleteImageFromAlbum)
 
 
 

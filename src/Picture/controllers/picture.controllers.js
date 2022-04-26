@@ -8,7 +8,6 @@ const createPicture = (req, res) => {
       error: "Bad request",
     });
   }
-  // Create a user
   const picture = new Picture({
     url: req.body.url,
     username: req.body.description,
@@ -26,7 +25,7 @@ const createPicture = (req, res) => {
 // Retrieve all Albums
 const getPicturesWithoutAlbum = (req, res) => {
   const userId = req.body.userId  
-  User.getAll(userId, (err, data) => {
+  Picture.getAll(userId, (err, data) => {
     if (err)
       return res.status(500).json({
         message: err.message || "Some error occurred while retrieving users", data:null
@@ -43,7 +42,46 @@ const getPicturesWithoutAlbum = (req, res) => {
   });
 };
 
+const addImageToAlbum = (req,res) => {
+  const imageAlbum = [
+    req.body.album,
+    req.body.image
+  ]
+  Picture.addToAlbum(imageAlbum,(err,data) => {
+    if(err){
+      return res.status(500).json({
+        message:err,
+        data:null
+      })
+    }
+    return res.status(200).json({
+      message:null,
+      data:data
+    })
+  })
+}
+
+const deleteImageFromAlbum = (req,res) => {
+  const imageAlbum = {
+    album:req.body.album,
+    image:req.body.image
+  }
+  Picture.deleteFromAlbum(imageAlbum,(err,data) => {
+    if(err){
+      return res.status(500).json({
+        message:err,
+        data:null
+      })
+    }
+    return res.status(200).json({
+      message:null,
+      data:data
+    })
+  })
+} 
 module.exports = {
     createPicture,
     getPicturesWithoutAlbum,
+    addImageToAlbum,
+    deleteImageFromAlbum
 }
