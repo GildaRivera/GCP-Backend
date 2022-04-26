@@ -13,15 +13,15 @@ Picture.create = (newPicture, result) => {
     return result(null, { id: res.insertId, ...newPicture});
   });
 };
-Picture.addToAlbum = (albumPicture, result) => {
-    
-    sql.query("INSERT INTO album_has_picture SET ? ", albumPicture, (err, res) => {
+Picture.addToAlbum = (albumPicture, result) => {  
+    sql.query("INSERT INTO album_has_picture (album_id, picture_id) VALUES (?,?) ", albumPicture, (err, res) => {
       if (err) {
         return result(err, null);
       }
-      return result(null, { id: res.insertId, ...newPicture});
+      return result(null, { id: res.insertId, ...albumPicture});
     });
 };
+
 Picture.getAll = (id, result) => {
     sql.query("SELECT * FROM picture WHERE user_id = ? ", id , (err,data)=>{
         if(err) return result(err,null)
@@ -29,8 +29,8 @@ Picture.getAll = (id, result) => {
     })
 }
 
-Picture.remove = (id, result) => {
-  sql.query("DELETE FROM album_has_picture WHERE picture_id = ?", id, (err, res) => {
+Picture.deleteFromAlbum = (imageAlbum, result) => {
+  sql.query(`DELETE FROM album_has_picture WHERE picture_id = ${imageAlbum.image} && almbum_id = ${imageAlbum.album}`,(err, res) => {
     if (err) {
      return result(null, err);
     }

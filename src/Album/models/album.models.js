@@ -21,7 +21,7 @@ Album.getAll = (id,result) => {
 }
 
 
-Album.remove = (id, result) => {
+Album.delete = (id, result) => {
   sql.query("DELETE FROM album WHERE id = ?", id, (err, res) => {
     if (err) {
      return result(null, err);
