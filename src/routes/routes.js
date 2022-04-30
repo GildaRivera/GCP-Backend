@@ -28,6 +28,9 @@ module.exports = routes => {
     router.delete('/album',album.deleteAlbum)
     
     //Picture
+
+    //Upload new picture
+    router.post('/uploadImage',picture.uploadImage)
     //Create a new picture
     router.post("/picture", picture.createPicture);
    
@@ -38,8 +41,7 @@ module.exports = routes => {
     router.post("/addImageToAlbum",picture.addImageToAlbum);
     
     //Delete Picture
-    router.delete("picture",picture.deleteImageFromAlbum)
-
+    router.delete("/picture",picture.deleteImageFromAlbum)
 
 
 
