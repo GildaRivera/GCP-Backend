@@ -1,4 +1,31 @@
+const { uploadFileToBucket } = require('../../config/storage');
 const Picture = require("../models/picture.model");
+
+const uploadImage = async (req,res) => {
+  if (Object.keys(req.body).length === 0) {
+    return res.status(400).send({
+      error: "Bad request",
+    });
+  }
+  try {
+    const myFile = req.file
+    const imageUrl = await uploadFileToBucket(myFile)
+    const picture = [
+      imageUrl,
+      req.body.description || ' ',
+      req.body.user_id
+    ]
+    Picture.create(picture, (err, data) => {
+      if (err)
+        return res.status(500).json({message:err.message,data:null})
+      else {     
+        return res.status(200).json({message:null,data:data})
+      }
+    });  
+  } catch (error) {
+    console.error(error)
+  }  
+}
 
 // Create and Save a Picture
 const createPicture = (req, res) => {
@@ -19,7 +46,7 @@ const createPicture = (req, res) => {
     else {     
       return res.status(200).json({message:null,data:data})
     }
-  });
+  }); 
 };
 
 // Retrieve all Albums
@@ -83,5 +110,6 @@ module.exports = {
     createPicture,
     getPicturesWithoutAlbum,
     addImageToAlbum,
-    deleteImageFromAlbum
+    deleteImageFromAlbum,
+    uploadImage
 }

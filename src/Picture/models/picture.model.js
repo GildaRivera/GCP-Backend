@@ -1,14 +1,15 @@
+
 const sql = require("../../config/connection");
 // constructor
 const Picture = function(picture) {
     this.url = picture.url
     this.description = picture.description
 };
+
 Picture.create = (newPicture, result) => {
-  
-  sql.query("INSERT INTO picture SET ?", newPicture, (err, res) => {
+  sql.query("INSERT INTO picture (url, description, user_id) VALUES (?,?,?)", newPicture, (err, res) => {
     if (err) {
-      return result(err, null);
+      return result(err.message, null);
     }
     return result(null, { id: res.insertId, ...newPicture});
   });
