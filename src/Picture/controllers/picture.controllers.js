@@ -51,7 +51,7 @@ const createPicture = (req, res) => {
 
 // Retrieve all Albums
 const getPicturesWithoutAlbum = (req, res) => {
-  const userId = req.body.userId  
+  const userId = req.query.userId 
   Picture.getAll(userId, (err, data) => {
     if (err)
       return res.status(500).json({
@@ -66,7 +66,7 @@ const getPicturesWithoutAlbum = (req, res) => {
       }
       return res.status(200).json({message:null,data:data});
     }
-  });
+  }); 
 };
 
 const addImageToAlbum = (req,res) => {
