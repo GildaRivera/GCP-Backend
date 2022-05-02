@@ -39,6 +39,8 @@ module.exports = routes => {
     
     //Add image to album
     router.post("/addImageToAlbum",picture.addImageToAlbum);
+
+    router.get("/getImagesFromAlbum",picture.getPicturesFromAlbum)
     
     //Delete Picture
     router.delete("/picture",picture.deleteImageFromAlbum)

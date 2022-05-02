@@ -51,8 +51,30 @@ const createPicture = (req, res) => {
 
 // Retrieve all Albums
 const getPicturesWithoutAlbum = (req, res) => {
+  
   const userId = req.query.userId 
   Picture.getAll(userId, (err, data) => {
+    if (err)
+      return res.status(500).json({
+        message: err.message || "Some error occurred while retrieving users", data:null
+      });
+    else {
+      if (data.length == 0) {
+        return res.status(403).json({
+          message: "Not users found",
+          data:null
+        });
+      }
+      return res.status(200).json({message:null,data:data});
+    }
+  }); 
+};
+
+// Retrieve all Albums
+const getPicturesFromAlbum = (req, res) => {
+  console.log(req.query)
+  const albumId = req.query.albumId 
+  Picture.getImagesFromAlbum(albumId, (err, data) => {
     if (err)
       return res.status(500).json({
         message: err.message || "Some error occurred while retrieving users", data:null
@@ -109,6 +131,7 @@ const deleteImageFromAlbum = (req,res) => {
 module.exports = {
     createPicture,
     getPicturesWithoutAlbum,
+    getPicturesFromAlbum,
     addImageToAlbum,
     deleteImageFromAlbum,
     uploadImage

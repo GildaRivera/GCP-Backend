@@ -5,7 +5,7 @@ const Album = function(album) {
 };
 Album.create = (newAlbum, result) => {
 
-  sql.query("INSERT INTO album SET ?", newAlbum, (err, res) => {
+  sql.query("INSERT INTO album (name,user_id) VALUES (?,?)", newAlbum, (err, res) => {
     if (err) {
       return result(err, null);
     }

@@ -7,22 +7,20 @@ const createAlbum = (req, res) => {
       error: "Bad request",
     });
   }
-
-  const album = new Album({
-    name: req.body.name
-  });
+  console.log('req',req.body)
+  const album = [req.body.name,req.body.userId]
   Album.create(album, (err, data) => {
     if (err)
       return res.status(500).json({message:err.message,data:null})
     else {     
       return res.status(200).json({message:null,data:data})
     }
-  });
+  }); 
 };
 
 // Retrieve all Albums
 const getAlbum = (req, res) => {
-  const userId = req.body.userId 
+  const userId = req.query.userId 
   Album.getAll(userId, (err, data) => {
     if (err)
       return res.status(500).json({
