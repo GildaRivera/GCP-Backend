@@ -51,6 +51,7 @@ const createPicture = (req, res) => {
 
 // Retrieve all Albums
 const getPicturesWithoutAlbum = (req, res) => {
+  
   const userId = req.query.userId 
   Picture.getAll(userId, (err, data) => {
     if (err)
