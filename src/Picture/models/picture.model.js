@@ -15,7 +15,7 @@ Picture.create = (newPicture, result) => {
   });
 };
 Picture.addToAlbum = (albumPicture, result) => {  
-    sql.query("INSERT INTO album_has_picture (album_id, picture_id) VALUES (?,?) ", albumPicture, (err, res) => {
+    sql.query("INSERT INTO album_has_picture (album_id, picture_id) VALUES (?,?)", albumPicture, (err, res) => {
       if (err) {
         return result(err, null);
       }
@@ -24,10 +24,18 @@ Picture.addToAlbum = (albumPicture, result) => {
 };
 
 Picture.getAll = (id, result) => {
-    sql.query("SELECT * FROM picture WHERE user_id = ? ", id , (err,data)=>{
+    sql.query("SELECT * FROM picture LEFT JOIN album_has_picture ON album_has_picture.picture_id != picture.id WHERE user_id = ?", id , (err,data)=>{
         if(err) return result(err,null)
         return result(null, data)
     })
+}
+
+Picture.getImagesFromAlbum = (album,result) => {
+  console.log("Album id: ",album)
+  sql.query(`SELECT * FROM gcpBackend.album_has_picture INNER JOIN gcpBackend.picture ON album_has_picture.picture_id = picture.id WHERE album_has_picture.album_id = ${album}`,(err,data)=>{
+    if(err) return result(err,null)
+    return result(null,data)
+  })
 }
 
 Picture.deleteFromAlbum = (imageAlbum, result) => {
