@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 // simple route
 app.get("/", (req, res) => {
   sql.query('SHOW COLUMNS FROM gcpBackend.album_has_picture',(err, data) => {
-    console.log(data)
+   
     if (err) {
       return res.status(500).json(err.message, null);
     }
@@ -38,7 +38,6 @@ app.get("/", (req, res) => {
 })
 app.get("/pictures", (req, res) => {
   sql.query('SELECT * FROM album',(err, data) => {
-    console.log(data)
     if (err) {
       return res.status(500).json(err.message, null);
     }
@@ -47,7 +46,6 @@ app.get("/pictures", (req, res) => {
 })
 app.get("/drop", (req, res) => {
   sql.query('ALTER TABLE picture DROP COLUMN description',(err, data) => {
-    console.log(data)
     if (err) {
       return res.status(500).json(err.message, null);
     }
@@ -56,7 +54,6 @@ app.get("/drop", (req, res) => {
 })
 app.get("/add", (req, res) => {
   sql.query('ALTER TABLE picture ADD description varchar(255)',(err, data) => {
-    console.log(data)
     if (err) {
       return res.status(500).json(err.message, null);
     }
@@ -65,7 +62,6 @@ app.get("/add", (req, res) => {
 })
 app.delete('/delete',(req,res)=>{
   sql.query(`DELETE FROM picture WHERE id=${req.body.id}`,(err, data) => {
-    console.log(data)
     if (err) {
       return res.status(500).json(err.message, null);
     }

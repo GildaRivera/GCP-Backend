@@ -33,7 +33,6 @@ Picture.getAll = (id, result) => {
 }
 
 Picture.getImagesFromAlbum = (album,result) => {
-  console.log("Album id: ",album)
   sql.query(`SELECT * FROM gcpBackend.album_has_picture INNER JOIN gcpBackend.picture ON album_has_picture.picture_id = picture.id WHERE album_has_picture.album_id = ${album}`,(err,data)=>{
     if(err) return result(err,null)
     return result(null,data)
@@ -41,9 +40,7 @@ Picture.getImagesFromAlbum = (album,result) => {
 }
 
 Picture.deletePicture = (id,result)=>{
-  console.log("delete",id)
   sql.query(`DELETE FROM picture WHERE id=${id}`,(err, data) => {
-    console.log(err)
     if (err) {
       return result(err,null)
     }

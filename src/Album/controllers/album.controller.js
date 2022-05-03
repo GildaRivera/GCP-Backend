@@ -7,7 +7,6 @@ const createAlbum = (req, res) => {
       error: "Bad request",
     });
   }
-  console.log('req',req.body)
   const album = [req.body.name,req.body.userId]
   Album.create(album, (err, data) => {
     if (err)
@@ -41,7 +40,6 @@ const getAlbum = (req, res) => {
 const emptyAlbum = (req,res) => {
   const album_id = req.body.id   
   Album.deleteEmpty(album_id,(err,data) => {
-    console.log(err)
     if(err){
       return res.status(500).json({
         message:err,
@@ -58,7 +56,6 @@ const emptyAlbum = (req,res) => {
 const deleteAlbum = (req,res) => {
   const album_id = req.body.id   
   Album.delete(album_id,(err,data) => {
-    console.log(err)
     if(err){
       return res.status(500).json({
         message:err,
