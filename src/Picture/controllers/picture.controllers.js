@@ -133,6 +133,7 @@ const deleteImageFromAlbum = (req,res) => {
   }
   Picture.deleteFromAlbum(imageAlbum,(err,data) => {
     if(err){
+      console.log("Error",err)
       return res.status(500).json({
         message:err,
         data:null

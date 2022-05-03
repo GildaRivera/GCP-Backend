@@ -56,6 +56,7 @@ const emptyAlbum = (req,res) => {
 const deleteAlbum = (req,res) => {
   const album_id = req.body.id   
   Album.delete(album_id,(err,data) => {
+    console.log(err)
     if(err){
       return res.status(500).json({
         message:err,
