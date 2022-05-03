@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deploy
+  labels:
+    app: backend-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-deploy
+  template:
+    metadata:
+      labels:
+        app: backend-deploy
+    spec:
+      containers:
+        - name: backend
+          image: gmrp/gcp-backend
+          env:
+          - name: MYSQL_HOST 
+            value: 34.123.10.235
+          - name: MYSQL_USER 
+            value: root
+          - name: MYSQL_PASSWORD 
+            value: proyectobd
+          - name: MYSQL_DATABASE 
+            value: gcpBackend
+          - name: BUCKET_KEYFILE
+            value: gcp-cloud-storage-mypicz-db53fff9f6bc.json
+          - name: GCLOUD_PROJECT_ID
+            value: gcp-cloud-storage-mypicz
+          - name: BUCKET_NAME
+            value: gcp-gial-mypicz           
+          ports:
+            - containerPort: 3001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-backend
+  labels:
+    app: backend-deploy
+spec:
+  type: LoadBalancer
+  selector:
+    app: backend-deploy
+  ports:
+    - port: 80
+      targetPort: 3001
+      protocol: TCP
