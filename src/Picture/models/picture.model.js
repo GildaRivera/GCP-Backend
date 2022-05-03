@@ -24,7 +24,9 @@ Picture.addToAlbum = (albumPicture, result) => {
 };
 
 Picture.getAll = (id, result) => {
-    sql.query("SELECT * FROM picture LEFT JOIN album_has_picture ON album_has_picture.picture_id != picture.id WHERE user_id = ?", id , (err,data)=>{
+    query1 = "SELECT * FROM picture WHERE user_id=${id} EXCEPT SELECT t1.id, t1.url, t1.description, t1.user_id FROM picture AS t1 JOIN album_has_picture AS t2 ON t2.picture_id = t1.id WHERE t1.user_id = ${id};"
+
+    sql.query(`SELECT * FROM picture WHERE user_id=${id}`,(err,data)=>{
         if(err) return result(err,null)
         return result(null, data)
     })
@@ -38,10 +40,21 @@ Picture.getImagesFromAlbum = (album,result) => {
   })
 }
 
-Picture.deleteFromAlbum = (imageAlbum, result) => {
-  sql.query(`DELETE FROM album_has_picture WHERE picture_id = ${imageAlbum.image} && almbum_id = ${imageAlbum.album}`,(err, res) => {
+Picture.deletePicture = (id,result)=>{
+  console.log("delete",id)
+  sql.query(`DELETE FROM picture WHERE id=${id}`,(err, data) => {
+    console.log(err)
     if (err) {
-     return result(null, err);
+      return result(err,null)
+    }
+    return result(null,data)
+  })
+}
+
+Picture.deleteFromAlbum = (imageAlbum, result) => {
+  sql.query(`DELETE FROM album_has_picture WHERE picture_id = ${imageAlbum.image} && album_id = ${imageAlbum.album}`,(err, res) => {
+    if (err) {
+     return result(err, null);
     }
     if (res.affectedRows == 0) {
      return result({ kind: "not_found" }, null);

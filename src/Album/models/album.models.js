@@ -20,9 +20,21 @@ Album.getAll = (id,result) => {
   })
 }
 
+Album.deleteEmpty = (id,result) => {
+  sql.query("DELETE FROM album WHERE id = ?", id, (err, res) => {
+    if (err) {
+     return result(null, err);
+    }
+    if (res.affectedRows == 0) {
+     return result({ kind: "not_found" }, null);
+
+    }
+    return result(null, res);
+  });
+}
 
 Album.delete = (id, result) => {
-  sql.query("DELETE FROM album WHERE id = ?", id, (err, res) => {
+  sql.query("DELETE FROM album_has_picture WHERE album_id = ?", id, (err, res) => {
     if (err) {
      return result(null, err);
     }

@@ -110,6 +110,23 @@ const addImageToAlbum = (req,res) => {
   })
 }
 
+const deleteImage = (req,res) => {
+  console.log(req.body.picture)
+  
+  Picture.deletePicture(req.body.picture,(err,data) => {
+    if(err){
+      return res.status(500).json({
+        message:err,
+        data:null
+      })
+    }
+    return res.status(200).json({
+      message:null,
+      data:data
+    })
+  })
+} 
+
 const deleteImageFromAlbum = (req,res) => {
   const imageAlbum = {
     album:req.body.album,
@@ -117,6 +134,7 @@ const deleteImageFromAlbum = (req,res) => {
   }
   Picture.deleteFromAlbum(imageAlbum,(err,data) => {
     if(err){
+      console.log("Error",err)
       return res.status(500).json({
         message:err,
         data:null
@@ -133,6 +151,7 @@ module.exports = {
     getPicturesWithoutAlbum,
     getPicturesFromAlbum,
     addImageToAlbum,
+    deleteImage,
     deleteImageFromAlbum,
     uploadImage
 }

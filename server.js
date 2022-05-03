@@ -37,7 +37,7 @@ app.get("/", (req, res) => {
   })
 })
 app.get("/pictures", (req, res) => {
-  sql.query('SELECT * FROM album_has_picture',(err, data) => {
+  sql.query('SELECT * FROM album',(err, data) => {
     console.log(data)
     if (err) {
       return res.status(500).json(err.message, null);
