@@ -72,7 +72,6 @@ const getPicturesWithoutAlbum = (req, res) => {
 
 // Retrieve all Albums
 const getPicturesFromAlbum = (req, res) => {
-  console.log(req.query)
   const albumId = req.query.albumId 
   Picture.getImagesFromAlbum(albumId, (err, data) => {
     if (err)
