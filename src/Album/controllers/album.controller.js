@@ -38,11 +38,27 @@ const getAlbum = (req, res) => {
   });
 };
 
-
+const emptyAlbum = (req,res) => {
+  const album_id = req.body.id   
+  Album.deleteEmpty(album_id,(err,data) => {
+    console.log(err)
+    if(err){
+      return res.status(500).json({
+        message:err,
+        data:null
+      })
+    }
+    return res.status(200).json({
+      message:null,
+      data:data
+    })
+  })
+}
 
 const deleteAlbum = (req,res) => {
   const album_id = req.body.id   
   Album.delete(album_id,(err,data) => {
+    console.log(err)
     if(err){
       return res.status(500).json({
         message:err,
@@ -59,5 +75,6 @@ const deleteAlbum = (req,res) => {
 module.exports = {
     createAlbum,
     getAlbum,
-    deleteAlbum
+    deleteAlbum,
+    emptyAlbum
 }

@@ -24,6 +24,8 @@ module.exports = routes => {
     //Get albumes
     router.get('/album',album.getAlbum)
 
+    router.delete('/emptyAlbum',album.emptyAlbum)
+
     //Delete Album
     router.delete('/album',album.deleteAlbum)
     
@@ -42,8 +44,10 @@ module.exports = routes => {
 
     router.get("/getImagesFromAlbum",picture.getPicturesFromAlbum)
     
+    router.delete('/picture',picture.deleteImage)
+
     //Delete Picture
-    router.delete("/picture",picture.deleteImageFromAlbum)
+    router.delete("/pictureFromAlbum",picture.deleteImageFromAlbum)
 
 
 
