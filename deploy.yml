@@ -27,11 +27,11 @@ spec:
           - name: MYSQL_DATABASE 
             value: gcpBackend
           - name: BUCKET_KEYFILE
-            value: gcp-cloud-storage-mypicz-db53fff9f6bc.json
+            value: gcp-f-lab4-c8a16beaafa2.json
           - name: GCLOUD_PROJECT_ID
-            value: gcp-cloud-storage-mypicz
+            value: gcp-f-lab4
           - name: BUCKET_NAME
-            value: gcp-gial-mypicz           
+            value: gcp-gial-final-project-2022         
           ports:
             - containerPort: 3001
 ---
